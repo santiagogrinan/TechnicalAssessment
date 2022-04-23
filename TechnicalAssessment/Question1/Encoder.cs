@@ -87,7 +87,7 @@ namespace Question1
         static string Decode(string input, char[] transcode)
         {
             int l = input.Length;
-            int cb = (l / 4 + ((Convert.ToBoolean(l % 4)) ? 1 : 0)) * 3 + 1;
+            int cb = (l / 4 + ((Convert.ToBoolean(l % 4)) ? 1 : 0)) * 3;
             char[] output = new char[cb];
             int c = 0;
             int bits = 0;
@@ -128,7 +128,6 @@ namespace Question1
             }
             result[62] = '+';
             result[63] = '/';
-            result[64] = '=';
 
             return result;
         }

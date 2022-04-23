@@ -19,14 +19,16 @@ namespace Question1
             Console.WriteLine("//=====================================================================");
             Console.WriteLine(test + " --> " + crypt);
             Console.WriteLine("//=====================================================================");
+            Console.WriteLine();
 
             string plain = encoder.Decode(crypt);
 
             Console.WriteLine("//=====================================================================");
             Console.WriteLine(crypt + " --> " + plain);
             Console.WriteLine("//=====================================================================");
+            Console.WriteLine();
 
-            if (crypt == plain)
+            if (test == plain)
                 Console.WriteLine("Test succeeded");
             else
                 Console.WriteLine("Test failed");
