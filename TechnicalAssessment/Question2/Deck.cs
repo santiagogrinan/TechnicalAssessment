@@ -27,12 +27,15 @@ namespace Question2
         #region Public
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         //=====================================================================
-        public Deck(IGeneratorRandomInt generatorInt, int suitsNumber, int cardPerSuit, int wildCardNumber)
+        public Deck(IGeneratorRandomInt generatorInt, int suitsNumber, int cardPerSuit, int wildCardNumber, int deckNumber = 1)
         {
             m_generatorInt = generatorInt;
             m_suitsNumber = suitsNumber;
             m_cardsPerSuit = cardPerSuit;
-            m_availableNumber = CreateNumbersAvailable(suitsNumber, cardPerSuit, wildCardNumber);
+            m_wildCard = wildCardNumber;
+            m_deckNumber = deckNumber;
+
+            m_availableNumber = CreateNumbersAvailable();
         }
 
         #endregion
@@ -42,25 +45,35 @@ namespace Question2
         //=====================================================================
         Card ParseIntToCard(int number)
         {
-            if (number >= m_suitsNumber * m_cardsPerSuit)
+            int deckNumber = ParseMultipleDeskToOneDesk(number);
+
+            if (deckNumber >= m_suitsNumber * m_cardsPerSuit)
                 return Card.CreateWildCard();
 
-            int cardNumber = number % m_cardsPerSuit;
-            int cardSuit = number / m_cardsPerSuit;
+            int cardNumber = deckNumber % m_cardsPerSuit;
+            int cardSuit = deckNumber / m_cardsPerSuit;
 
             return Card.CreateCard(cardNumber, cardSuit);
         }
 
-        #endregion
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        #region Static Function
-        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::   
         //=====================================================================
-        static List<int> CreateNumbersAvailable (int suitsNumber, int cardPerSuit, int wildCardAvailable)
+        int ParseMultipleDeskToOneDesk(int number)
+        {
+            return number % CardPerDeck;
+        }
+
+        //=====================================================================
+        int CardPerDeck => m_suitsNumber * m_cardsPerSuit + m_wildCard;
+
+        //=====================================================================
+        int CardCount => CardPerDeck * m_deckNumber;
+
+        //=====================================================================
+        List<int> CreateNumbersAvailable()
         {
             List<int> result = new List<int>();
 
-            int numberCards = suitsNumber * cardPerSuit + wildCardAvailable;
+            int numberCards = CardCount;
 
             for (int i = 0; i < numberCards; i++)
                 result.Add(i);
@@ -75,6 +88,8 @@ namespace Question2
         IGeneratorRandomInt m_generatorInt;
         int m_suitsNumber;
         int m_cardsPerSuit;
+        int m_wildCard;
+        int m_deckNumber;
         List<int> m_availableNumber;
 
         #endregion
