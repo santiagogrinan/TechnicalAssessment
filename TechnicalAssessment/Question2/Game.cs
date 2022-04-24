@@ -25,9 +25,9 @@ namespace Question2
             foreach (Player p in player)
                 p.AddCard(m_deck.GetCard());
 
-            player.OrderBy(p => p.Cards, m_comparer);
+            player = player.OrderBy(p => p.Cards, m_comparer).ToList();
 
-            if (m_comparer.Compare(player[0].Cards, player[1].Cards) > 0)
+            if (m_comparer.Compare(player[0].Cards, player[1].Cards) < 0)
                 player[0].SetResult(Player.ResultEnum.Win);
 
             else

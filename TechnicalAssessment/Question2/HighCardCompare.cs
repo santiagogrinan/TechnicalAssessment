@@ -30,10 +30,10 @@ namespace Question2
                     return 0;
 
                 if (x.Suit < y.Suit)
-                    return 1;
+                    return -1;
                 
                 if (x.Suit > y.Suit)
-                    return -1;
+                    return 1;
             }
 
             return 0;                      

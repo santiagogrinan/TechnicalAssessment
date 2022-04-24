@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Question2
 {
@@ -9,8 +10,9 @@ namespace Question2
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            TestDeck();
+            //TestDeck();
             //TestComparer();
+            TestGames();
         }
 
         //=====================================================================
@@ -24,6 +26,37 @@ namespace Question2
                 toPrnt += "Number : " + card.Number + " | Suit : " + card.Suit;
 
             Console.WriteLine(toPrnt);
+        }
+
+        //=====================================================================
+        static void PrintPlayer(Player player)
+        {
+            Console.WriteLine("//=====================================================================");
+            Console.WriteLine();
+            Console.WriteLine("Player : " + player.DisplayName);
+            Console.WriteLine();
+            Console.WriteLine("Result : " + player.Result.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Cards : ");
+
+            foreach (Card c in player.Cards)
+                PrintCard(c);
+
+            Console.WriteLine();
+        }
+
+        //=====================================================================
+        static void PrintGameResult(string gamerName, Player[] players)
+        {
+            Console.WriteLine("//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+            Console.WriteLine();
+            Console.WriteLine("Game : " + gamerName);
+            Console.WriteLine();
+
+            foreach (Player p in players)
+                PrintPlayer(p);
+
+            Console.WriteLine();
         }
 
         //=====================================================================
@@ -65,6 +98,31 @@ namespace Question2
                 Console.WriteLine("Ok");
             else
                 Console.WriteLine("Error");
+        }
+
+        //=====================================================================
+        static void TestGames()
+        {
+            FactoryGame factoryGame = new FactoryGame();
+            Game[] games = factoryGame.GenerateGames();
+
+            for (int i = 0; i < games.Length; i++)
+                TestGame(games[i], "Point_" + (i + 1));
+        }
+
+        //=====================================================================
+        static void TestGame(Game game, string gamerName)
+        {
+            List<Player> players = new List<Player>
+            {
+                new Player("Santiago"),
+                new Player("Valeria"),
+                new Player("Javier"),
+            };
+
+            game.Play(ref players);
+
+            PrintGameResult(gamerName, players.ToArray());
         }
     }
 }

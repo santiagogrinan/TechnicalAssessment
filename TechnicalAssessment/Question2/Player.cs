@@ -20,8 +20,9 @@ namespace Question2
 
         public ResultEnum Result { get; private set; }
 
-        public Player(string DisplayName)
+        public Player(string displayName)
         {
+            DisplayName = displayName;
             IdName = Guid.NewGuid().ToString();
             m_cards = new List<Card>();
             Result = ResultEnum.Undefined;
