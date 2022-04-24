@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Question2
 {
@@ -8,7 +9,8 @@ namespace Question2
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            TestDeck();
+            //TestDeck();
+            TestComparer();
         }
 
         //=====================================================================
@@ -38,6 +40,31 @@ namespace Question2
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        //=====================================================================
+        static void TestComparer()
+        {
+            Card[] card_1 = new Card[]
+            {
+                Card.CreateWildCard(),
+                Card.CreateCard(2, 2),
+            };
+
+            Card[] card_2 = new Card[]
+            {
+                Card.CreateWildCard(),
+                Card.CreateCard(3, 0),
+            };
+
+
+            IComparer<Card> comparerSingle = new HighCardCompare(false);
+            IComparer<Card[]> comparerMultiple = new HighCardMultipleCompare(comparerSingle);
+
+            if (comparerMultiple.Compare(card_1, card_2) > 0)
+                Console.WriteLine("Ok");
+            else
+                Console.WriteLine("Error");
         }
     }
 }
