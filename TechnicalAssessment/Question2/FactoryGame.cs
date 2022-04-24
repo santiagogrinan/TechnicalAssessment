@@ -6,6 +6,23 @@ namespace Question2
 {
     class FactoryGame
     {
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        #region Public
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        //=====================================================================
+        public Game[] GenerateGames()
+        {
+            return new Game[]
+            {
+                Point_1(),
+                Point_2(),
+                Point_3(),
+                Point_4(),
+                Point_5(),
+                Point_6(),
+            };
+        }
+
         //=====================================================================
         public Game Point_1()
         {
@@ -33,14 +50,13 @@ namespace Question2
         //=====================================================================
         public Game Point_3()
         {
-            //TO-DO MultipleDesk
             int suitNumber = 4;
             int cardPertSuit = 13;
             bool useWildCard = false;
             bool suitDecide = true;
             bool allowTies = true;
 
-            return CreateGame(suitNumber, cardPertSuit, useWildCard, suitDecide, allowTies);
+            return CreateGame(suitNumber, cardPertSuit, useWildCard, suitDecide, allowTies, 5);
         }
 
         //=====================================================================
@@ -79,11 +95,16 @@ namespace Question2
             return CreateGame(suitNumber, cardPertSuit, useWildCard, suitDecide, allowTies);
         }
 
+        #endregion
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        #region Static Functions
+        //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
         //=====================================================================
-        static Game CreateGame(int suitNumber, int cardPerSuit, bool useWildCard, bool suitDecide, bool allowTie)
+        static Game CreateGame(int suitNumber, int cardPerSuit, bool useWildCard, bool suitDecide, bool allowTie, int deckNumber = 1)
         {
             IGeneratorRandomInt randomGenerate = new Generator();
-            IDeck deck = new Deck(randomGenerate, suitNumber, cardPerSuit, useWildCard ? 1 : 0);
+            IDeck deck = new Deck(randomGenerate, suitNumber, cardPerSuit, useWildCard ? 1 : 0, deckNumber);
 
             IComparer<Card> singleComparer = new HighCardCompare(suitDecide);
             IComparer<Card[]> multipleComparer = new HighCardMultipleCompare(singleComparer);
@@ -91,5 +112,6 @@ namespace Question2
             return new Game(deck, multipleComparer, allowTie);
 
         }
+        #endregion
     }
 }
