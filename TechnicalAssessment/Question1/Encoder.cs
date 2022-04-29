@@ -18,12 +18,20 @@ namespace Question1
         //=====================================================================
         public string Encode(string input)
         {
+            foreach (char c in input.ToCharArray())
+                if (c > MaxValueCharPlain)
+                    throw new ArgumentOutOfRangeException("input has characteres not valid");
+
             return Encode(input, m_transcode);
         }
 
         //=====================================================================
         public string Decode(string input)
         {
+            foreach (char c in input.ToCharArray())
+                if (!m_transcode.Contains(c))
+                        throw new ArgumentOutOfRangeException("input has characteres not valid");
+
             return Decode(input, m_transcode);
         }
 
@@ -32,31 +40,31 @@ namespace Question1
         #region Static Functions
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         //=====================================================================
-        static string Encode(string input, char[] transcode)
+        static string Encode(string input, string transcode)
         {
-            int cb = (input.Length / 3 + (Convert.ToBoolean(input.Length % 3) ? 1 : 0)) * 4;
+            string result = "";
 
-            char[] output = new char[cb];
-
-            int c = 0;
-            int reflex = 0;
-            const int s = 0x3f;
+            short reflex = 0;
 
             for (int j = 0; j < input.Length; j++)
             {
                 reflex <<= 8;
-                reflex &= GetOriginMask();
-                reflex += input[j];
-
+                reflex += (short)input[j]; //input couldn't be higher or equeal that 2^8
+                
                 int x = ((j % 3) + 1) * 2;
-                int mask = s << x;
-                while (mask >= s)
+                short mask = (short)(MaxValueCharChiper << x);
+
+                int pivot = (reflex & mask) >> x;
+                result += transcode[pivot];
+                reflex &= (short)~mask;
+
+                if (x == 6)
                 {
-                    int pivot = (reflex & mask) >> x;
-                    output[c++] = transcode[pivot];
-                    reflex &= ~mask;
                     mask >>= 6;
-                    x -= 6;
+                    pivot = reflex & mask;
+                    result += transcode[pivot];
+                    reflex &= (short)~mask;
+
                 }
             }
 
@@ -64,52 +72,47 @@ namespace Question1
             {
                 case 1:
                     reflex <<= 4;
-                    output[c] = transcode[reflex];
+                    result += transcode[reflex];
                     break;
 
                 case 2:
                     reflex <<= 2;
-                    output[c] = transcode[reflex];
+                    result += transcode[reflex];
                     break;
-
             }
 
-            string result = new string(output);
+            //reflex <<= 2;
+            //result += transcode[reflex];
 
-            return result.Replace("\0", "");
+            return result;
         }
 
         //=====================================================================
-        static string Decode(string input, char[] transcode)
+        static string Decode(string input, string transcode)
         {
-            int cb = (input.Length / 4 + ((Convert.ToBoolean(input.Length % 4)) ? 1 : 0)) * 3;
-            char[] output = new char[cb];
-            int c = 0;
-            int bits = 0;
+            string result = "";
             int reflex = 0;
 
             for (int j = 0; j < input.Length; j++)
             {
                 reflex <<= 6;
-                bits += 6;
-                reflex += indexOf(input[j], transcode);                    
+                reflex += indexOf(input[j], transcode);
 
-                while (bits >= 8)
+                int x = (3 - (j % 4)) * 2;
+
+                if (x < 6)
                 {
-                    int mask = GetOriginMask(true) << (bits % 8);
-                    output[c++] = (char)((reflex & mask) >> (bits % 8));
+                    int mask = MaxValueCharPlain << x;
+                    result += (char)((reflex & mask) >> x);
                     reflex &= ~mask;
-                    bits -= 8;
                 }
             }
 
-            string result = new string(output);
-
-            return result.Replace("\0", "");
+            return result;
         }
 
         //=====================================================================
-        static char[] CreateTranscode()
+        static string CreateTranscode()
         {
             char[] result = new char[64];
 
@@ -128,19 +131,18 @@ namespace Question1
             result[62] = '+';
             result[63] = '/'; 
 
-            return result;
+            return new string(result);
         }
 
         //=====================================================================
-        static int GetOriginMask(bool invert = false)
+        static short GetOriginMask()
         {
             int mask = 0xff00;
-            if (invert) return ~mask;
-            return mask;
+            return (short)mask;
         }
 
         //=====================================================================
-        static int indexOf(char ch, char[] transcode)
+        static int indexOf(char ch, string transcode)
         {
             int index;
             for (index = 0; index < transcode.Length; index++)
@@ -150,11 +152,14 @@ namespace Question1
             throw new Exception("Char are not generated by this Encoder");
         }
 
+
         #endregion
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         #region Fields
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        static char[] m_transcode;
+        static string m_transcode;
+        static int MaxValueCharPlain => 255;
+        static int MaxValueCharChiper => m_transcode.Length - 1; 
 
         #endregion
     }

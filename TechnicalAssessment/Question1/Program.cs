@@ -12,13 +12,13 @@ namespace Question1
         {
             try
             {
-                //Test("This is a test string", "Test 1");
-                //Test("other test", "Test 2");
-                //Test("abc", "Test 3");
-                //Test("abcde", "Test 4");
-                //Test("1", "Test 5");
-                //Test("This is a large text that allow know if working well with big string", "Test 6");
-                //Test("Test special caracter \"&\"", "Test 7");
+                Test("This is a test string", "Test 1");
+                Test("other test", "Test 2");
+                Test("abc", "Test 3");
+                Test("abcde", "Test 4");
+                Test("1", "Test 5");
+                Test("This is a large text that allow know if working well with big string", "Test 6");
+                Test("Test special caracter \"&\"", "Test 7");
                 TestAllCharecters();
             }
             catch(Exception ex)
