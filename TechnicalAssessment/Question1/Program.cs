@@ -67,7 +67,6 @@ namespace Question1
         {
             char[] text = new char[95];
 
-            //Add uppercase
             for (int i = 0; i < text.Length; i++)
                 text[i] = (char)((int)' ' + i);
 
