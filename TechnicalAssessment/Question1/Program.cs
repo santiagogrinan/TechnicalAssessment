@@ -19,7 +19,9 @@ namespace Question1
                 Test("1", "Test 5");
                 Test("This is a large text that allow know if working well with big string", "Test 6");
                 Test("Test special caracter \"&\"", "Test 7");
-                TestAllCharecters();
+                Test("Test new line \n Second line", "Test 8");
+                TestAlphanumericCharacters();
+                TestAllCharacter();
             }
             catch(Exception ex)
             {
@@ -34,12 +36,12 @@ namespace Question1
         {
             Encoder encoder = new Encoder();
 
-            string crypt = encoder.Encode(text);
-
             Console.WriteLine("//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
             Console.WriteLine();
             Console.WriteLine("Test : " + testName);
             Console.WriteLine();
+
+            string crypt = encoder.Encode(text);
 
             Console.WriteLine("//=====================================================================");
             Console.WriteLine();
@@ -63,12 +65,23 @@ namespace Question1
         }
 
         //=====================================================================
-        static void TestAllCharecters()
+        static void TestAlphanumericCharacters()
         {
             char[] text = new char[95];
 
             for (int i = 0; i < text.Length; i++)
                 text[i] = (char)((int)' ' + i);
+
+            Test(new string(text), "AlphanumericCharacters");
+        }
+
+        //=====================================================================
+        static void TestAllCharacter()
+        {
+            char[] text = new char[255];
+
+            for (int i = 0; i < text.Length; i++)
+                text[i] = (char)i;
 
             Test(new string(text), "AllCharecters");
         }

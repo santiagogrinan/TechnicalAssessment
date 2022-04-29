@@ -44,26 +44,26 @@ namespace Question1
         {
             string result = "";
 
-            short reflex = 0;
+            int reflex = 0;
 
             for (int j = 0; j < input.Length; j++)
             {
                 reflex <<= 8;
-                reflex += (short)input[j]; //input couldn't be higher or equeal that 2^8
+                reflex += input[j]; //input couldn't be higher or equeal that 2^8
                 
-                int x = ((j % 3) + 1) * 2;
-                short mask = (short)(MaxValueCharChiper << x);
+                int rotateFactor = ((j % 3) + 1) * 2;
+                int mask = MaxValueCharChiper << rotateFactor;
 
-                int pivot = (reflex & mask) >> x;
+                int pivot = (reflex & mask) >> rotateFactor;
                 result += transcode[pivot];
-                reflex &= (short)~mask;
+                reflex &= ~mask;
 
-                if (x == 6)
+                if (rotateFactor == 6)
                 {
                     mask >>= 6;
                     pivot = reflex & mask;
                     result += transcode[pivot];
-                    reflex &= (short)~mask;
+                    reflex &= ~mask;
 
                 }
             }
@@ -95,12 +95,12 @@ namespace Question1
                 reflex <<= 6;
                 reflex += indexOf(input[j], transcode);
 
-                int x = (3 - (j % 4)) * 2;
+                int rotateFactor = (3 - (j % 4)) * 2;
 
-                if (x < 6)
+                if (rotateFactor < 6)
                 {
-                    int mask = MaxValueCharPlain << x;
-                    result += (char)((reflex & mask) >> x);
+                    int mask = MaxValueCharPlain << rotateFactor;
+                    result += (char)((reflex & mask) >> rotateFactor);
                     reflex &= ~mask;
                 }
             }
@@ -129,13 +129,6 @@ namespace Question1
             result[63] = '/'; 
 
             return new string(result);
-        }
-
-        //=====================================================================
-        static short GetOriginMask()
-        {
-            int mask = 0xff00;
-            return (short)mask;
         }
 
         //=====================================================================
