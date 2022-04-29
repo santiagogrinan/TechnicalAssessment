@@ -13,7 +13,9 @@ namespace Question1
             Test("This is a test string", "Test 1");
             Test("other test", "Test 2");
             Test("abc", "Test 3");
-            Test("1", "Test 4");
+            Test("abcde", "Test 4");
+            Test("1", "Test 5");
+            Test("This is a large text that allow know if working well with big string", "Test 6");
         } 
 
         static void Test(string text, string testName)

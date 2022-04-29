@@ -38,10 +38,6 @@ namespace Question1
             int cb = (l / 3 + (Convert.ToBoolean(l % 3) ? 1 : 0)) * 4;
 
             char[] output = new char[cb];
-            for (int i = 0; i < cb; i++)
-            {
-                output[i] = '=';
-            }
 
             int c = 0;
             int reflex = 0;
@@ -59,8 +55,7 @@ namespace Question1
                 {
                     int pivot = (reflex & mask) >> x;
                     output[c++] = transcode[pivot];
-                    int invert = ~mask;
-                    reflex &= invert;
+                    reflex &= ~mask;
                     mask >>= 6;
                     x -= 6;
                 }
@@ -70,17 +65,19 @@ namespace Question1
             {
                 case 1:
                     reflex <<= 4;
-                    output[c++] = transcode[reflex];
+                    output[c] = transcode[reflex];
                     break;
 
                 case 2:
                     reflex <<= 2;
-                    output[c++] = transcode[reflex];
+                    output[c] = transcode[reflex];
                     break;
 
             }
 
-            return new string(output);
+            string result = new string(output);
+
+            return result.Replace("\0", "");
         }
 
         //=====================================================================
@@ -96,21 +93,15 @@ namespace Question1
             {
                 reflex <<= 6;
                 bits += 6;
-                bool fTerminate = ('=' == input[j]);
-                if (!fTerminate)
-                    reflex += indexOf(input[j], transcode);
+                reflex += indexOf(input[j], transcode);                    
 
                 while (bits >= 8)
                 {
                     int mask = 0x000000ff << (bits % 8);
                     output[c++] = (char)((reflex & mask) >> (bits % 8));
-                    int invert = ~mask;
-                    reflex &= invert;
+                    reflex &= ~mask;
                     bits -= 8;
                 }
-
-                if (fTerminate)
-                    break;
             }
 
             string result = new string(output);
