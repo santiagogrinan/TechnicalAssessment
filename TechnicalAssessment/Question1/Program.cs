@@ -12,6 +12,8 @@ namespace Question1
         {
             Test("This is a test string", "Test 1");
             Test("other test", "Test 2");
+            Test("abc", "Test 3");
+            Test("1", "Test 4");
         } 
 
         static void Test(string text, string testName)
