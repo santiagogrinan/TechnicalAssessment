@@ -16,6 +16,7 @@ namespace Question1
             Test("abcde", "Test 4");
             Test("1", "Test 5");
             Test("This is a large text that allow know if working well with big string", "Test 6");
+            Test("Test special caracter \"&\"", "Test 7");
         } 
 
         static void Test(string text, string testName)
