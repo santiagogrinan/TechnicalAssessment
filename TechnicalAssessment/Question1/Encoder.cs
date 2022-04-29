@@ -113,14 +113,21 @@ namespace Question1
         static char[] CreateTranscode()
         {
             char[] result = new char[64];
-            for (int i = 0; i < 64; i++)
-            {
+
+            //Add uppercase
+            for (int i = 0; i < 26; i++)
                 result[i] = (char)((int)'A' + i);
-                if (i > 25) result[i] = (char)((int)result[i] + 6);
-                if (i > 51) result[i] = (char)((int)result[i] - 0x4b);
-            }
+
+            //Add lowercase
+            for (int i = 0; i < 26; i++)
+                result[i + 26] = (char)((int)'a' + i);
+
+            //Add Number
+            for (int i = 0; i < 10; i++)
+                result[i + 52] = (char)((int)'0' + i);
+            
             result[62] = '+';
-            result[63] = '/';
+            result[63] = '/'; 
 
             return result;
         }
