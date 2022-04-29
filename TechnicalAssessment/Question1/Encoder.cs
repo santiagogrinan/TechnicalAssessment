@@ -81,9 +81,6 @@ namespace Question1
                     break;
             }
 
-            //reflex <<= 2;
-            //result += transcode[reflex];
-
             return result;
         }
 
