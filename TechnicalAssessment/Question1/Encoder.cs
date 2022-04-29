@@ -79,7 +79,7 @@ namespace Question1
                     break;
 
             }
-            
+
             return new string(output);
         }
 
@@ -113,7 +113,9 @@ namespace Question1
                     break;
             }
 
-            return new string(output);
+            string result = new string(output);
+
+            return result.Replace("\0", "");
         }
 
         //=====================================================================

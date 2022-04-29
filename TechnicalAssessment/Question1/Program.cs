@@ -10,28 +10,41 @@ namespace Question1
     {
         static void Main(string[] args)
         {
-            string test = "This is a test string";
+            Test("This is a test string", "Test 1");
+            Test("other test", "Test 2");
+        } 
 
+        static void Test(string text, string testName)
+        {
             Encoder encoder = new Encoder();
 
-            string crypt = encoder.Encode(test);
+            string crypt = encoder.Encode(text);
+
+            Console.WriteLine("//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+            Console.WriteLine();
+            Console.WriteLine("Test : " + testName);
+            Console.WriteLine();
 
             Console.WriteLine("//=====================================================================");
-            Console.WriteLine(test + " --> " + crypt);
-            Console.WriteLine("//=====================================================================");
+            Console.WriteLine();
+            Console.WriteLine(text + " --> " + crypt);
             Console.WriteLine();
 
             string plain = encoder.Decode(crypt);
 
             Console.WriteLine("//=====================================================================");
+            Console.WriteLine();
             Console.WriteLine(crypt + " --> " + plain);
-            Console.WriteLine("//=====================================================================");
             Console.WriteLine();
 
-            if (test == plain)
+            Console.WriteLine("//=====================================================================");
+            Console.WriteLine();
+            if (text == plain)
                 Console.WriteLine("Test succeeded");
             else
                 Console.WriteLine("Test failed");
-        }     
+
+            Console.WriteLine();
+        }
     }
 }
