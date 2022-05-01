@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Question2
 {
-    interface IDeck
+    public interface IDeck
     {
         Card GetCard();
     }

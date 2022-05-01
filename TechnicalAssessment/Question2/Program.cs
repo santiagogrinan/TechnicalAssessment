@@ -10,9 +10,9 @@ namespace Question2
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            //TestDeck();
+            TestDeck();
             //TestComparer();
-            TestGames();
+            //TestGames();
         }
 
         //=====================================================================
@@ -64,7 +64,7 @@ namespace Question2
         {
             try
             {
-                IDeck deck = new Deck(new Generator(), 2, 2, 1, 2);
+                IDeck deck = new Deck(new Generator(), 2, 2, 1, 1);
 
                 while (true)
                     PrintCard(deck.GetCard());

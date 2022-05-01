@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Question2
 {
-    interface IGeneratorRandomInt
+    public interface IGeneratorRandomInt
     {
         public int GenerateInt(int minVal, int maxVAL); 
     }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Question2
 {
-    class Deck : IDeck
+    public class Deck : IDeck
     {
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         #region Implement IDeck
@@ -13,7 +13,7 @@ namespace Question2
         //=====================================================================
         public Card GetCard()
         {
-            if (m_availableNumber.Count == 0) throw new Exception("Not Card Available");
+            if (m_availableNumber.Count == 0) throw new NoCardAvailableExpection();
 
             int randomNumber = m_generatorInt.GenerateInt(0, m_availableNumber.Count);
             int realityNumber = m_availableNumber[randomNumber];
