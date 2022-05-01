@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Question2
 {
-    class HighCardMultipleCompare : IComparer<Card[]>
+    public class HighCardMultipleCompare : IComparer<Card[]>
     {
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         #region Implement IComparer
