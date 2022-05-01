@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Question2
 {
-    class HighCardCompare : IComparer<Card>
+    public class HighCardCompare : IComparer<Card>
     {
         //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         #region Implement IComparer
@@ -13,7 +13,7 @@ namespace Question2
         //=====================================================================
         public int Compare([AllowNull] Card x, [AllowNull] Card y)
         {
-            if (x.IsWildCard && x.IsWildCard)
+            if (x.IsWildCard && y.IsWildCard)
                 return 0;
             else if (x.IsWildCard)
                 return -1;

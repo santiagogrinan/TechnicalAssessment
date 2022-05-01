@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Question2
 {
-    class Card
+    public class Card
     {
 
         public static Card CreateWildCard()
