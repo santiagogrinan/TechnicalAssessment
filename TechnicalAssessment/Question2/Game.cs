@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Question2
 {
-    class Game
+    public class Game
     {
         //=====================================================================
         public Game(IDeck deck, IComparer<Card[]> comparer, bool allowTie)
@@ -34,6 +34,7 @@ namespace Question2
             {
                 if (m_allowTie)
                 {
+                    player[0].SetResult(Player.ResultEnum.Tie);
                     for (int i = 1; i < player.Count; i++)
                     {
                         if (m_comparer.Compare(player[0].Cards, player[i].Cards) == 0)
@@ -46,17 +47,16 @@ namespace Question2
                 {
                     while (m_comparer.Compare(player[0].Cards, player[1].Cards) == 0)
                     {
+                        Card cardToPlayer0 = m_deck.GetCard();
                         for (int i = 1; i < player.Count; i++)
                         {
                             if (m_comparer.Compare(player[0].Cards, player[i].Cards) == 0)
                                 player[i].AddCard(m_deck.GetCard());
                             else
-                            {
-                                player.OrderBy(p => p.Cards, m_comparer);
                                 break;
-                            }
-
                         }
+                        player[0].AddCard(cardToPlayer0);
+                        player = player.OrderBy(p => p.Cards, m_comparer).ToList();
                     }
 
                     player[0].SetResult(Player.ResultEnum.Win);

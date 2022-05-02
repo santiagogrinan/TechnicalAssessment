@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Question2
 {
-    class Player
+    public class Player
     {
         public enum ResultEnum
         {
