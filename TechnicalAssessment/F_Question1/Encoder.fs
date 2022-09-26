@@ -32,13 +32,14 @@ let encode (input : string) : string =
         match transcodeValue(byte(pivot)) with
             | Some(x) -> result <- result + string(x)
             | None -> raise (System.Exception("error"))
-        
+
+    let rotateFactors : int list = [2; 4; 6]        
 
     for i in 0 .. (input.Length - 1) do
         reflex <- reflex <<< 8
         reflex <- reflex + int(byte(input[i]))
 
-        let rotateFactor : int = ((i % 3) + 1) * 2
+        let rotateFactor : int = rotateFactors[i % 3]
         let mask : int = 63 <<< rotateFactor
 
         let pivot = (reflex &&& mask) >>> rotateFactor
@@ -57,7 +58,7 @@ let encode (input : string) : string =
         reflex <- reflex <<< 4
         addValueFromPivot reflex
     | 2 -> reflex <- reflex <<< 2; addValueFromPivot reflex
-    | _ -> result <- result
+    | _ -> ()
 
     result
 
