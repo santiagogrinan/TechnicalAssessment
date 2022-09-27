@@ -9,12 +9,26 @@ type HighCardComare (allowSite : bool) =
         member this.Compare(x: Cards.Card, y: Cards.Card): int =
         
             let compare (x : int, y : int, higherWin : bool) : int =
-                match x > y with
-                | true -> 1
-                | false -> 
-                    match x < y with
-                    | true -> - 1
-                    | false -> 0
+
+                let invert (x : int) : int =
+                    match x > 0 with
+                    | true -> -1
+                    | false -> 
+                        match x < 0 with
+                        | true -> 1
+                        | false -> 0
+
+                let winHigher (x : int, y: int) : int =
+                    match x > y with
+                    | true -> 1
+                    | false -> 
+                        match x < y with
+                        | true -> - 1
+                        | false -> 0
+
+                match higherWin with
+                | true -> winHigher(x, y)
+                | false -> winHigher(x, y) |> invert
 
             match x with
                 | Cards.WildCard -> 
