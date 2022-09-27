@@ -32,7 +32,7 @@ type CustomDeck (suitsNumber : int, cardPerSuit : int, wildCardNumber : int, dec
                 | true -> Cards.WildCard
                 | false -> 
                     let card : Cards.StandardCard = { 
-                            Number = numberInDeck % m_cardPerSuit
+                            Number = numberInDeck % m_cardPerSuit 
                             Suit = numberInDeck / m_cardPerSuit
                             }
                     Cards.Card.StandardCard card
